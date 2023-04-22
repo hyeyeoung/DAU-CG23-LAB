@@ -22,6 +22,12 @@ function draw_line(p0, p1) {
 
 function draw_triangle(triData)
 {
+    let isFill = false;
+    const area = Math.abs((triData.pt1.x - triData.pt0.x) * (triData.pt2.y - triData.pt0.y) - (triData.pt3.x - triData.pt0.x) * (triData.pt1.y - triData.pt0.y));
+    const sub1 = 0.5 * Math.abs((triData.pt0.x - mouseX) * (triData.pt1.y - mouseY) - (triData.pt1.x - mouseX) * (triData.pt0.y - mouseY));
+    const sub2 = 0.5 * Math.abs((triData.pt1.x - mouseX) * (triData.pt2.y - mouseY) - (triData.pt2.x - mouseX) * (triData.pt1.y - mouseY));
+    const sub3 = 0.5 * Math.abs((triData.pt2.x - mouseX) * (triData.pt0.y - mouseY) - (triData.pt0.x - mouseX) * (triData.pt2.y - mouseY));
+    if(Math.abs((sub1+sub2+sub3) - area)<0.000001) isFill = true;
     draw_line(triData.pt0,triData.pt1);
     draw_line(triData.pt1,triData.pt2);
     draw_line(triData.pt2,triData.pt0);
@@ -31,6 +37,8 @@ function draw_box(boxData) {
 
     let isFill=false;
     //Mouse Check
+    if(mouseX>= boxData.minPt.x && mouseX<= boxData.maxPt.x && mouseY>=boxData.minPt.y && mouseY <= boxData.maxPt.y) isFill = true;
+    
 
     ctx.beginPath();
     ctx.rect(boxData.minPt.x, boxData.minPt.y, boxData.maxPt.x - boxData.minPt.x, boxData.maxPt.y - boxData.minPt.y);
@@ -43,7 +51,8 @@ function draw_box(boxData) {
 function draw_circle(circleData) {
     let isFill=false;
     //Mouse Check
-    
+    // console.log(circleData.ctx.x)
+    if(Math.pow(circleData.radius,2) >= (Math.pow(circleData.ctr.x - mouseX,2)+Math.pow(circleData.ctr.y - mouseY, 2))) isFill = true;
     ctx.beginPath();
     ctx.arc(circleData.ctr.x, circleData.ctr.y, circleData.radius, 0, 2 * Math.PI);
     ctx.stroke();

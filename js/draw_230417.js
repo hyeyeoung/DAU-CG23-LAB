@@ -3,6 +3,7 @@ let ctx = c.getContext("2d");
 let ctrlPts = [];
 let isClicked = false;
 let clickIdx = -1;
+let aboveIdx = -1;
 
 ctrlPts.push(new THREE.Vector2(100, 400));
 ctrlPts.push(new THREE.Vector2(200, 200));
@@ -23,24 +24,23 @@ function draw_line(p0, p1, color) {
   ctx.lineTo(p1.x, p1.y);
   ctx.stroke();
 }
-
+// 빡침의 표정ㅋㅋ
 function draw_bezier(ctrlPts) {
-
   for (let i = 0; i < ctrlPts.length - 1; i++)
     draw_line(ctrlPts[i], ctrlPts[i + 1], "#000000");
 
   for (let i = 0; i < ctrlPts.length; i++)
-    draw_point(ctrlPts[i], "#000000");
+    if(aboveIdx==i) draw_point(ctrlPts[i],"#ffff00")
+    else  draw_point(ctrlPts[i], "#000000");
 
   let bezierPts = [];
-  let resolution = 10;
+  let resolution = 50;
   for (let i = 0; i <= resolution; i++) {
     let t = i / resolution;
     bezierPts.push(bezier_curve(ctrlPts, t));
   }
   for (let i = 0; i < bezierPts.length - 1; i++)
     draw_line(bezierPts[i], bezierPts[i + 1], "#cc00cc");
-
 }
 
 //bezier functions
@@ -73,10 +73,14 @@ function getMousePos(c, e) {
 c.addEventListener("mousemove", function (e) {
   var mousePos = getMousePos(c, e);
   if (isClicked) {
+    
     ctrlPts[clickIdx].x = mousePos.x;
     ctrlPts[clickIdx].y = mousePos.y;
   }
+  for (let i = 0;i<ctrlPts.length; i++)
+    if(mousePos.distanceTo(ctrlPts[i]) <10) aboveIdx = i;
 }, false);
+
 
 c.addEventListener("mousedown", function (e) {
   var mousePos = getMousePos(c, e);
