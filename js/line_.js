@@ -1,6 +1,6 @@
 let c = document.getElementById("myCanvas");
 let ctx = c.getContext("2d"); // 2d context를 ctx로 정의
-// 1주차 실습
+
 //Make data
 let pts = []; //배열 지정
 
@@ -42,30 +42,36 @@ function draw_point(p)
 // 점 4개를 기준으로 선분을 받아옴
 // 선분과 선분이 만나는 지점을 표시하는 함수 완성하기
 function line_line_intersection(p0, p1, p2, p3) {
-    // y=ax+b : 직선의 방정식
-    // a:기울기 : y증가량 / x증가량
-    // y=a0x+b0  y=a1x+b1
+    // 네 개의 점을 이용해서 각각의 선분의 방정식을 구한다. 
+    // y = a0x + b0  y = a1x + b1 
     let a0 = (p1.y - p0.y) / (p1.x - p0.x);
-    let b0 = p0.y - a0 * p0.x;
-
+    let b0 = p0.y - (a0 * p0.x);
     let a1 = (p3.y - p2.y) / (p3.x - p2.x);
-    let b1 = p2.y - a1 * p2.x;
+    let b1 = p2.y - (a1 * p2.x);
 
-    //직선의 교점? a0x+b0=a1x+b1 --> (a0-a1)x = b1 -b0
-    let intersectionX = (b1 - b0) / (a0 - a1);
-    let intersectionY = a0 * intersectionX + b0;
+    // 두 선분의 방정식이 교차하는 동일한 XY좌표를 가진다? 
+    // Y = a0x + b0에 Y = a1X+b1 식을 대입해 풀이한다
+    // a0x+b0 = a1x+b1 ->x = (b1-b0) / (a0 - a1)로 풀이한다.
+    // Y값은 아무 직선의 방정식에 대입해 도출되는 Y값을 취한다.
+    let X = (b1 - b0) / (a0 - a1);
+    let Y = a0 * X + b0;
+    
+    // 점찍기. 선분은 길이가 정해져있어서 그냥 찍으면 안된다. 검사 한 번 ㄱㄱ
+    let d1 = is_divide_ptx(p0,p1,p2,p3);
+    let d2 = is_divide_ptx(p2,p3,p0,p1);
 
-    if (p0.x > intersectionX || p1.x < intersectionX)
-        return;
-    if (p2.x > intersectionX || p3.x < intersectionX)
-        return;
-    if (p0.y > intersectionY || p1.y < intersectionY)
-        return;
-    if (p2.y > intersectionY || p3.y < intersectionY)
-        return;
+    // XY좌표가 선분위에 존재하는 점인지 확인
+    if(!(d1 || d2)) return;
+    let dot = new THREE.Vector2(X,Y);
+    draw_point(dot);
+}
+// 두 선분의 교차 여부를 확인하는 함수
+// 하나의 선분이 다른 선분 하나를 양분하는지(즉 만나는지)확인한다.
+function is_divide_ptx(p0,p1,p2,p3){
+    let f1= (p1.x-p0.x)*(p2.y-p0.y) - (p1.y-p0.y)*(p2.x-p0.x)
+    let f2= (p1.x-p0.x)*(p3.y-p0.y) - (p1.y-p0.y)*(p3.x-p0.x)
 
-    let intersectionPt = new THREE.Vector2(intersectionX, intersectionY);
-    draw_point(intersectionPt);
+    return (f1*f2<0) ? true: false;
 }
 
 line_line_intersection(pts[0],pts[1],pts[2],pts[3]);

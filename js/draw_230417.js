@@ -1,9 +1,9 @@
 let c = document.getElementById("myCanvas");
 let ctx = c.getContext("2d");
 let ctrlPts = [];
-let isClicked = false;
-let clickIdx = -1;
-let aboveIdx = -1;
+let isClicked = false; // 클릭이 되어있는지 아닌지 확인하는 변수 
+let clickIdx = -1; // 어느 인덱스가 클릭되었는지 확인하는 변수
+let aboveIdx = -1; // 어느 점 위에 올라가 있는지 인덱스 저장 변수
 
 ctrlPts.push(new THREE.Vector2(100, 400));
 ctrlPts.push(new THREE.Vector2(200, 200));

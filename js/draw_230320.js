@@ -6,7 +6,7 @@ let yValue = 0;
 //Make data
 let linePts = [];
 linePts.push(new THREE.Vector2(10, 60));
-linePts.push(new THREE.Vector2(150, 200));
+linePts.push(new THREE.Vector2(300, 700));
 
 linePts.push(new THREE.Vector2(50, 250));
 linePts.push(new THREE.Vector2(350, 250));
@@ -97,30 +97,39 @@ function line_line_intersection(p0, p1, p2, p3) {
 
 function line_box_intersection(lineP0, lineP1, boxMinPt, boxMaxPt) {
 
-    let a = (lineP1.y - lineP0.y) / (lineP1.x - lineP0.x); 
-    let b = lineP0.y - a * lineP0.x; 
+    // let a = (lineP1.y - lineP0.y) / (lineP1.x - lineP0.x); 
+    // let b = lineP0.y - a * lineP0.x; 
 
-    let pint0 = a * boxMinPt.x + b;
-    let pint1 = a*boxMaxPt.x +b;
-    let pint2 = (boxMinPt.y - b) / a;
-    let pint3 = (boxMaxPt.y -b)/a;
+    // let pint0 = a * boxMinPt.x + b;
+    // let pint1 = a*boxMaxPt.x +b;
+    // let pint2 = (boxMinPt.y - b) / a;
+    // let pint3 = (boxMaxPt.y -b)/a;
 
-    if(pint0 >= boxMinPt.y && pint0 <= boxMaxPt.y&& pint0 >= lineP0.x &&pint0<=lineP1.x){
-        let X = new THREE.Vector2(boxMinPt.x, pint0); //왼쪽 세로축    
-        draw_point(X);
-    }
-    if(pint1 >= boxMinPt.y && pint1<= boxMaxPt.y&& pint1 >= lineP0.x &&pint1<=lineP1.x){
-        let X = new THREE.Vector2(boxMaxPt.x, pint1); //왼쪽 세로축    
-        draw_point(X);
-    }
-    if(pint2>=boxMinPt.x && pint2<=boxMaxPt.x&& pint2 >= lineP0.y &&pint2<=lineP1.y){
-        let Y = new THREE.Vector2(pint2, boxMinPt.y); //위쪽 가로줄    
-        draw_point(Y);
-    }
-    if(pint3>=boxMinPt.x && pint3<=boxMaxPt.x && pint3 >= lineP0.y &&pint3<=lineP1.y){
-        let Y = new THREE.Vector2(pint3, boxMaxPt.y); // 가로줄    
-        draw_point(Y);
-    }
+    let dot1 = new THREE.Vector2(boxMinPt.x, boxMaxPt.y);
+    let dot2 = new THREE.Vector2(boxMaxPt.x,boxMinPt.y);
+
+    line_line_intersection(lineP0, lineP1, boxMinPt, dot1);
+    line_line_intersection(lineP0, lineP1, dot1, boxMaxPt);
+    line_line_intersection(lineP0, lineP1, boxMaxPt, dot2);
+    line_line_intersection(lineP0, lineP1, dot2, boxMinPt);
+
+
+    // if(pint0 >= boxMinPt.y && pint0 <= boxMaxPt.y&& pint0 >= lineP0.x &&pint0<=lineP1.x){
+    //     let X = new THREE.Vector2(boxMinPt.x, pint0); //왼쪽 세로축    
+    //     draw_point(X);
+    // }
+    // if(pint1 >= boxMinPt.y && pint1<= boxMaxPt.y&& pint1 >= lineP0.x &&pint1<=lineP1.x){
+    //     let X = new THREE.Vector2(boxMaxPt.x, pint1); //왼쪽 세로축    
+    //     draw_point(X);
+    // }
+    // if(pint2>=boxMinPt.x && pint2<=boxMaxPt.x&& pint2 >= lineP0.y &&pint2<=lineP1.y){
+    //     let Y = new THREE.Vector2(pint2, boxMinPt.y); //위쪽 가로줄    
+    //     draw_point(Y);
+    // }
+    // if(pint3>=boxMinPt.x && pint3<=boxMaxPt.x && pint3 >= lineP0.y &&pint3<=lineP1.y){
+    //     let Y = new THREE.Vector2(pint3, boxMaxPt.y); // 가로줄    
+    //     draw_point(Y);
+    // }
 }
 
 function line_circle_intersection(lineP0, lineP1, circleCtr, circleRadius) {
