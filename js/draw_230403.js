@@ -22,15 +22,10 @@ function draw_line(p0, p1) {
 
 function draw_triangle(triData)
 {
-    let isFill = false;
-    const area = Math.abs((triData.pt1.x - triData.pt0.x) * (triData.pt2.y - triData.pt0.y) - (triData.pt3.x - triData.pt0.x) * (triData.pt1.y - triData.pt0.y));
-    const sub1 = 0.5 * Math.abs((triData.pt0.x - mouseX) * (triData.pt1.y - mouseY) - (triData.pt1.x - mouseX) * (triData.pt0.y - mouseY));
-    const sub2 = 0.5 * Math.abs((triData.pt1.x - mouseX) * (triData.pt2.y - mouseY) - (triData.pt2.x - mouseX) * (triData.pt1.y - mouseY));
-    const sub3 = 0.5 * Math.abs((triData.pt2.x - mouseX) * (triData.pt0.y - mouseY) - (triData.pt0.x - mouseX) * (triData.pt2.y - mouseY));
-    if(Math.abs((sub1+sub2+sub3) - area)<0.000001) isFill = true;
     draw_line(triData.pt0,triData.pt1);
     draw_line(triData.pt1,triData.pt2);
     draw_line(triData.pt2,triData.pt0);
+
 }
 
 function draw_box(boxData) {

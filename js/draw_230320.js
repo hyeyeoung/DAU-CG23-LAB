@@ -61,8 +61,9 @@ function draw_image() {
     ctx.strokeStyle = "black";
     draw_circle(new THREE.Vector2(230 + xValue, 230 + yValue), 110);
 
-    line_box_intersection(linePts[0],linePts[1],boxPts[0],boxPts[1])
-    line_box_intersection(linePts[2],linePts[3],boxPts[0],boxPts[1])
+    line_line_intersection(linePts[0],linePts[1],linePts[2],linePts[3]);
+    line_box_intersection(linePts[0],linePts[1],boxPts[0],boxPts[1]);
+    line_box_intersection(linePts[2],linePts[3],boxPts[0],boxPts[1]);
     line_circle_intersection(linePts[0],linePts[1],new THREE.Vector2(230 + xValue, 230 + yValue), 110)
     line_circle_intersection(linePts[2],linePts[3],new THREE.Vector2(230 + xValue, 230 + yValue), 110)
     box_circle_intersection(boxPts[0],boxPts[1],new THREE.Vector2(230 + xValue, 230 + yValue), 110)
@@ -72,16 +73,29 @@ function line_line_intersection(p0, p1, p2, p3) {
     // y=ax+b : 직선의 방정식
     // a:기울기 : y증가량 / x증가량
     // y=a0x+b0  y=a1x+b1
+    let intersectionPt;
+    let intersectionX;
+    let intersectionY;
     let a0 = (p1.y - p0.y) / (p1.x - p0.x); 
     let b0 = p0.y - a0 * p0.x; 
 
     let a1 = (p3.y - p2.y) / (p3.x - p2.x);
     let b1 = p2.y - a1 * p2.x;
 
+    // 하나의 선분만이 x = n이라는 식을 가질때, 예외처리 필요
+    if(p2.x - p3.x == 0 && p0.x - p1.x != 0){
+        intersectionX = p2.x;
+        intersectionY = p2.x * a0 + b0; 
+    }
+    else if(p2.x - p3.x != 0 && p0.x - p1.x == 0){
+        intersectionX = p1.x;
+        intersectionY = p1.x * a1 + b1;
+    }
+    else{
     //직선의 교점? a0x+b0=a1x+b1 --> (a0-a1)x = b1 -b0
-    let intersectionX = (b1 - b0) / (a0 - a1);
-    let intersectionY = a0 * intersectionX + b0;
-
+        intersectionX = (b1 - b0) / (a0 - a1);
+        intersectionY = a0 * intersectionX + b0;
+    }
     if (p0.x > intersectionX || p1.x < intersectionX)
         return;
     if (p2.x > intersectionX || p3.x < intersectionX)
@@ -91,45 +105,18 @@ function line_line_intersection(p0, p1, p2, p3) {
     if (p2.y > intersectionY || p3.y < intersectionY)
         return;
 
-    let intersectionPt = new THREE.Vector2(intersectionX, intersectionY);
+    intersectionPt = new THREE.Vector2(intersectionX, intersectionY);
     draw_point(intersectionPt);
 }
 
 function line_box_intersection(lineP0, lineP1, boxMinPt, boxMaxPt) {
-
-    // let a = (lineP1.y - lineP0.y) / (lineP1.x - lineP0.x); 
-    // let b = lineP0.y - a * lineP0.x; 
-
-    // let pint0 = a * boxMinPt.x + b;
-    // let pint1 = a*boxMaxPt.x +b;
-    // let pint2 = (boxMinPt.y - b) / a;
-    // let pint3 = (boxMaxPt.y -b)/a;
-
     let dot1 = new THREE.Vector2(boxMinPt.x, boxMaxPt.y);
     let dot2 = new THREE.Vector2(boxMaxPt.x,boxMinPt.y);
 
     line_line_intersection(lineP0, lineP1, boxMinPt, dot1);
     line_line_intersection(lineP0, lineP1, dot1, boxMaxPt);
-    line_line_intersection(lineP0, lineP1, boxMaxPt, dot2);
+    line_line_intersection(lineP0, lineP1,  dot2,boxMaxPt);
     line_line_intersection(lineP0, lineP1, dot2, boxMinPt);
-
-
-    // if(pint0 >= boxMinPt.y && pint0 <= boxMaxPt.y&& pint0 >= lineP0.x &&pint0<=lineP1.x){
-    //     let X = new THREE.Vector2(boxMinPt.x, pint0); //왼쪽 세로축    
-    //     draw_point(X);
-    // }
-    // if(pint1 >= boxMinPt.y && pint1<= boxMaxPt.y&& pint1 >= lineP0.x &&pint1<=lineP1.x){
-    //     let X = new THREE.Vector2(boxMaxPt.x, pint1); //왼쪽 세로축    
-    //     draw_point(X);
-    // }
-    // if(pint2>=boxMinPt.x && pint2<=boxMaxPt.x&& pint2 >= lineP0.y &&pint2<=lineP1.y){
-    //     let Y = new THREE.Vector2(pint2, boxMinPt.y); //위쪽 가로줄    
-    //     draw_point(Y);
-    // }
-    // if(pint3>=boxMinPt.x && pint3<=boxMaxPt.x && pint3 >= lineP0.y &&pint3<=lineP1.y){
-    //     let Y = new THREE.Vector2(pint3, boxMaxPt.y); // 가로줄    
-    //     draw_point(Y);
-    // }
 }
 
 function line_circle_intersection(lineP0, lineP1, circleCtr, circleRadius) {
