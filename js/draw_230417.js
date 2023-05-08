@@ -34,7 +34,7 @@ function draw_bezier(ctrlPts) {
     else  draw_point(ctrlPts[i], "#000000");
 
   let bezierPts = [];
-  let resolution = 50;
+  let resolution = 8;
   for (let i = 0; i <= resolution; i++) {
     let t = i / resolution;
     bezierPts.push(bezier_curve(ctrlPts, t));

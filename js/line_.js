@@ -26,6 +26,7 @@ function draw_line(p0,p1)
     ctx.moveTo(p0.x, p0.y); // (공중에서) 시작점으로 옮김
     ctx.lineTo(p1.x, p1.y); //종이에 그리며 끝 점으로 옮김
     ctx.stroke(); // 그림 그리기를 종료 + 선분이어서 fill할 필요 없다.
+    // strokeStyle ="green"
 }
 
 //점을 그리기

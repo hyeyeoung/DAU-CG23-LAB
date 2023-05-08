@@ -59,14 +59,14 @@ function draw_image() {
     ctx.strokeStyle = "green";
     draw_box(boxPts[0], boxPts[1])
     ctx.strokeStyle = "black";
-    draw_circle(new THREE.Vector2(230 + xValue, 230 + yValue), 110);
+    draw_circle(new THREE.Vector2(xValue, yValue), 110);
 
     line_line_intersection(linePts[0],linePts[1],linePts[2],linePts[3]);
     line_box_intersection(linePts[0],linePts[1],boxPts[0],boxPts[1]);
     line_box_intersection(linePts[2],linePts[3],boxPts[0],boxPts[1]);
-    line_circle_intersection(linePts[0],linePts[1],new THREE.Vector2(230 + xValue, 230 + yValue), 110)
-    line_circle_intersection(linePts[2],linePts[3],new THREE.Vector2(230 + xValue, 230 + yValue), 110)
-    box_circle_intersection(boxPts[0],boxPts[1],new THREE.Vector2(230 + xValue, 230 + yValue), 110)
+    line_circle_intersection(linePts[0],linePts[1],new THREE.Vector2(xValue, yValue), 110)
+    line_circle_intersection(linePts[2],linePts[3],new THREE.Vector2(xValue, yValue), 110)
+    box_circle_intersection(boxPts[0],boxPts[1],new THREE.Vector2(xValue, yValue), 110)
 }
 
 function line_line_intersection(p0, p1, p2, p3) {

@@ -33,8 +33,8 @@ function draw_image() {
 }
 
 function box_box_collision(pMin, pMax, qMin, qMax) {
-  let qw = qMax.x - qMin.x;
-  let qh = qMax.y - qMin.y;
+  let qw = qMax.x - qMin.x; // 
+  let qh = qMax.y - qMin.y; 
   //Need to write...
   if (qMin.x >= pMin.x - qw && qMax.x <= pMax.x + qw && qMin.y >= pMin.y - qh && qMax.y <= pMax.y +qh)
     return true;
