@@ -15,21 +15,15 @@ function loadOBJ(url) {
     url,
     // called when resource is loaded
     function (object) {
-
       scene.add(object);
-
     },
     // called when loading is in progresses
     function (xhr) {
-
       console.log((xhr.loaded / xhr.total * 100) + '% loaded');
-
     },
     // called when loading has errors
     function (error) {
-
       console.log('An error happened');
-
     }
   );
 }
@@ -48,14 +42,15 @@ function initGeometry() {
   const axesHelper = new THREE.AxesHelper(); //x:red y:green z:blue 
   scene.add(axesHelper);
   // loadOBJ("../models/kitten.obj");
-  loadOBJ("../models/bunny_stanford.obj");
+  loadOBJ("../models/gargoyle.obj");
 
 }
+
 
 function initRenderer() {
   camera.position.z = 1;
   controls.update();
-  renderer.setClearColor("#000000");
+  renderer.setClearColor("#ffffff");
   renderer.setSize(500, 500);
   // Append Renderer to DOM
   document.body.appendChild(renderer.domElement);
@@ -69,17 +64,19 @@ function init() {
 
 // Render Loop
 var render = function () {
-  // scene.children[0].position.set(10,0,10)
   requestAnimationFrame(render);
-  // controls.autoRotate = true; // 카메라 회전
-  index++;
-  // scene.children[0].position.set(
-  //   10*Math.cos(Math.PI* index/100.0), 0,
-  //   10*Math.sin(Math.PI* index/100.0)
+  // y축을 중심으로 모델 회전
+  // scene.children[3].rotation.y +=0.01;
+  // 카메라 회전
+  // controls.autoRotate = true; 
+  // 광원 회전
+  //  scene.children[0].position.set(
+  //   100*Math.cos(Math.PI* index/100.0), 0,
+  //   100*Math.sin(Math.PI* index/100.0)
   // )
+  index++;
   controls.update();
   renderer.render(scene, camera);
-  // console.log(controls.autoRotate)
 };
 
 init();
