@@ -13,8 +13,8 @@ var torus;
 
 // ambientLigtht => 최소한의 빛
 // ~Helper 빛을 보는데 도움을 줌
-const spotLight = new THREE.SpotLight(0xffffff, 0.5, 30, Math.PI * 0.1, 0.1, 1);
-const spotLightHelper = new THREE.SpotLightHelper(spotLight);
+// const spotLight = new THREE.SpotLight(0xffffff, 0.5, 30, Math.PI * 0.1, 0.1, 1);
+// const spotLightHelper = new THREE.SpotLightHelper(spotLight);
 
 // R
 const spotLight_Red = new THREE.SpotLight(0xff0000, 0.5, 30, Math.PI * 0.1, 0.1, 1);
@@ -70,32 +70,29 @@ function initLight() {
   // spotLight.castShadow = true;
   // scene.add(spotLight);
   // scene.add(spotLightHelper);
+
+
   // R
   spotLight_Red.position.set(-1,0,10);
-  spotLight_Red.castShadow = true; 
   var RedTarget = new THREE.Object3D();
   RedTarget.position.set(-1,-1,0);
   spotLight_Red.target = RedTarget;
   scene.add(spotLight_Red);
-  // scene.add(spotLight_RedHelper);
-
+  scene.add(spotLight_RedHelper);
   // B
-  spotLight_Blue.position.set(-1,0,10);
-  spotLight_Blue.castShadow = true; 
+  spotLight_Blue.position.set(0,1,10);
   var BlueTarget = new THREE.Object3D();
   BlueTarget.position.set(0,1,0);
   spotLight_Blue.target = BlueTarget;
   scene.add(spotLight_Blue);
-  // scene.add(spotLight_BlueHelper)
-
+  scene.add(spotLight_BlueHelper);
   // G
-  spotLight_Green.position.set(-1,0,10);
-  spotLight_Green.castShadow = true; 
+  spotLight_Green.position.set(1,0,10);
   var GreenTarget = new THREE.Object3D();
   GreenTarget.position.set(1,-1,0);
   spotLight_Green.target = GreenTarget;
   scene.add(spotLight_Green);
-  // scene.add(spotLight_GreenHelper)
+  scene.add(spotLight_GreenHelper)
   
   // scene.add(ambientLight);
   // pointLight.position.set(-2, -2, 2);
@@ -252,7 +249,7 @@ var render = function () {
   requestAnimationFrame(render);
   controls.update();
 
-  spotLightHelper.update();
+  // spotLightHelper.update();
   spotLight_RedHelper.update();
   spotLight_GreenHelper.update();
   spotLight_BlueHelper.update();
