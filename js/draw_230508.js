@@ -93,7 +93,6 @@ var render = function () {
     // 큐브 랜덤으로 돌리기
     for (var i = 1; i < scene.children.length; i++) {
             scene.children[i].rotation.x += 0.01 * Math.random();            
-        
     }
     renderer.render(scene, camera);
 

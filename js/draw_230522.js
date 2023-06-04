@@ -26,7 +26,7 @@ const spotLight_GreenHelper = new THREE.SpotLightHelper(spotLight_Green);
 const spotLight_Blue = new THREE.SpotLight(0x0000ff, 0.5, 30, Math.PI * 0.1, 0.1, 1);
 const spotLight_BlueHelper = new THREE.SpotLightHelper(spotLight_Blue);
 
-// const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 // const pointLight = new THREE.PointLight(0xff9000, 0.9, 15, 3);
 // const pointLightHelper = new THREE.PointLightHelper(pointLight, 1);
 
@@ -94,7 +94,7 @@ function initLight() {
   scene.add(spotLight_Green);
   scene.add(spotLight_GreenHelper)
   
-  // scene.add(ambientLight);
+  scene.add(ambientLight);
   // pointLight.position.set(-2, -2, 2);
   // scene.add(pointLight);
   // scene.add(pointLightHelper);
@@ -198,7 +198,7 @@ function initGUI() {
   // three js 내부적으로 존재하는 ambientLight와 "visible".name으로 이름 지정
   // visible이 뭐지 -> boolean 값
   // abmientLight -> 최소한의 빛
-  // gui.add(ambientLight, "visible").name("Ambient Light");
+  gui.add(ambientLight, "visible").name("Ambient Light");
   // gui.add(spotLight, "visible").name("Spot Light");
   gui.add(spotLight_Red,"visible").name("Spot Light RED");
   gui.add(spotLight_Green,"visible").name("Spot Light GREEN");
