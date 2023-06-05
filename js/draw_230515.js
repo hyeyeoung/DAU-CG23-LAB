@@ -53,6 +53,7 @@ function initRenderer() {
   renderer.setClearColor("#ffffff");
   renderer.setSize(500, 500);
   // Append Renderer to DOM
+  
   document.body.appendChild(renderer.domElement);
 }
 
@@ -66,7 +67,7 @@ function init() {
 var render = function () {
   requestAnimationFrame(render);
   // y축을 중심으로 모델 회전
-  // scene.children[3].rotation.y +=0.01;
+  scene.children[3].rotation.set(0, Math.PI/2 , 0);
   // 카메라 회전
   // controls.autoRotate = true; 
   // 광원 회전

@@ -69,15 +69,6 @@ function initGeometry() {
             // Add cube to Scene
             scene.add(cube);
         }
-        // for(var j = 5;j<10;j++){
-        //     var wireframe = new THREE.WireframeGeometry(geometryCube);
-        //     wireframe.material.depthTest = false;
-        //     wireframe.material.opacity = 0.25;
-        //     wireframe.material.transparent = true;
-            // wireframe.translateX(-10.0 + 2.0 * i); // 10*10으로 할거면 시작점을 낮춰야한다.
-            // wireframe.translateY(-10.0 + 2.0 * j);
-            // scene.add(wireframe)
-        // }
     }
 }
 
